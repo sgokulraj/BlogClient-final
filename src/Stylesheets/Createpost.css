@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.createContainer{
+    max-width: 700px;
+    margin: 20px auto;
+}
+.createContainer form{
+    max-width: 80%;
+    margin: 20px auto;
+}
+.inputcontainer{
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #cdcbcb;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.btnPost{
+   text-align: center;
+   width: 100%;
+}
+
+.previewContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100px, 100%), 1fr));
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.imgPreview {
+    width: 100px;
+    display: inline-block;
+    position: relative;
+}
+
+.imgPreview img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom:20px;
+}
+
+.deleteImg {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    font-size: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+
+.loginContainer .formlog {
+    max-width: 500px;
+    margin: 50px auto;
+    text-align: center;
+
+}
+
+.loginContainer .formlog form {
+    max-width: 80%;
+    margin: 20px auto;
+}
+
+.errormsg{
+    color: red;
+}
