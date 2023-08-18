@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form"
 import { useEffect } from 'react';
 import { useLoginMutation } from "../ReduxState/appApi"
-
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
 
 function Login() {
     const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm()
@@ -35,6 +36,16 @@ function Login() {
     }, [isSubmitSuccessful, reset])
 
     const [login, { isLoading, isError, error }] = useLoginMutation()
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">Test Credentials</Popover.Header>
+            <Popover.Body>
+                <p><strong>Email:</strong> gokul@test.com</p>
+                <p><strong>Password:</strong> Gokul!123</p>
+            </Popover.Body>
+        </Popover>
+    )
 
     return (
         <div className='loginContainer'>
@@ -73,6 +84,9 @@ function Login() {
                     <Button type="reset" variant="secondary">Reset</Button>
                     <p style={{ marginTop: "20px" }}>New to iBlog? <Link to="/register">Click here to Register</Link></p>
                 </form>
+                <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                    <Button variant="success">View Test Credentials</Button>
+                </OverlayTrigger>
             </div>
         </div>
     )

@@ -8,8 +8,9 @@ import Editpost from './Components/Editpost';
 import Createpost from './Components/Createpost';
 import Singlepost from './Components/Singlepost';
 import Navbar from "./Components/Navbar"
-import Profiles from "./Components/Profiles"
+// import Profiles from "./Components/Profiles"
 import Mypost from './Components/Mypost';
+import Profile from "./Components/Profile"
 
 function App() {
   const user = useSelector((state) => state.user)
@@ -18,17 +19,19 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route index element={<Posts />} />
-        <Route path='*' element={<Posts />} />
         {!user && (
           <>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Signup />} />
           </>
         )}
+
+        <Route path='*' element={user ? <Posts /> : <Login />} />
+
         {user && (
           <>
-            <Route path='/profile' element={<Profiles />} />
+            <Route path='/' element={<Posts />} />
+            <Route path='/profile' element={<Profile />} />
             <Route path='/myposts' element={<Mypost />} />
             <Route path='/create' element={<Createpost />} />
             <Route path='/post/:id' element={<Singlepost />} />

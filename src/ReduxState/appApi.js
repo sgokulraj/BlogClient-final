@@ -49,23 +49,33 @@ export const appApi = createApi({
 
         editUser: builder.mutation({
             query: (user) => ({
-                url: `/users/${user.id}`,
+                url: `/users/${user.userId}`,
                 method: "PATCH",
                 body: user
             })
         }),
 
-        deleteUser: builder.mutation({
-            query: ( userId ) => ({
-                url: `/users/${userId}`,
-                method: "DELETE",
-                body: userId
+        updateLikes: builder.mutation({
+            query: ({postId, userId}) => ({
+                url: `/posts/${postId}/likes`,
+                method: "PATCH",
+                body: {userId}
+            })
+        }),
+
+        updateComments: builder.mutation({
+            query:(post) => ({
+                url: `posts/${post.postId}/comments`,
+                method:"PATCH",
+                body: post
             })
         })
+
+        
 
     })
 })
 
-export const { useSignupMutation, useLoginMutation, useCreatePostMutation, useDeletePostMutation, useEditPostMutation, useEditUserMutation, useDeleteUserMutation } = appApi
+export const { useSignupMutation, useLoginMutation, useCreatePostMutation, useDeletePostMutation, useEditPostMutation, useEditUserMutation, useUpdateLikesMutation, useUpdateCommentsMutation } = appApi
 
 export default appApi

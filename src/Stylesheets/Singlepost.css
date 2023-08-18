@@ -30,13 +30,15 @@
 }
 
 .imgContain {
-    max-height: 500px;
+    max-width: 500px;
+    max-height: 400px;
     overflow: hidden;
     margin-bottom: 20px;
+    margin: 20px auto
 }
 
 .imgContain img {
-    object-fit: contain;
+    object-fit: cover;
     object-position: center center;
     width: 100%;
 }
@@ -50,4 +52,24 @@
 .editpostBtn {
     font-size: 20px;
     margin-right: 20px;
+}
+
+
+.postImpressed{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.likes {
+    color: hotpink;
+}
+
+.commentContainer {
+    margin-top: 0.5rem;
+}
+
+.comment {
+    margin: 5px 0;
+    padding-left: 15px;
 }

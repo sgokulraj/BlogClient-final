@@ -76,7 +76,7 @@ function Createpost() {
         }
         const res = await createPost({ title, summary, description, images, author: user._id })
         console.log(res);
-        if (res.data.length > 0) {
+        if (res.data?.length > 0) {
             setTimeout(() => {
                 navigate("/posts");
             }, 1500);

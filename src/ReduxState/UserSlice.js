@@ -8,13 +8,10 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setLogout: ()=> initialState,
-        setUserDelete: ()=> initialState
     },
     extraReducers: (builder)=>{
-        builder.addMatcher(appApi.endpoints.signup.matchFulfilled, (state, action)=>action.payload)
         builder.addMatcher(appApi.endpoints.login.matchFulfilled, (state, action)=>action.payload)
         builder.addMatcher(appApi.endpoints.editUser.matchFulfilled, (state, action)=>action.payload)
-        builder.addMatcher(appApi.endpoints.deleteUser.matchFulfilled, (state, action)=>action.payload)
     }
 
 })
