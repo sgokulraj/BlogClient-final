@@ -9,7 +9,18 @@ export const postsSlice = createSlice({
     reducers: {
         setPosts: (_, action) => {
             return action.payload.data
-        },
+        }, 
+        setPost: (_, action) => {
+            console.log(state.posts)
+            const updatedPosts = state.posts?.map((post) => {
+              if (post._id === action.payload.posts._id) {
+                return action.payload.posts;
+              }
+              return post;
+            });
+            console.log(updatedPosts)
+            state.posts = updatedPosts;
+          },
         setEmpty: () => initialState,
     },
     extraReducers: (builder) => {
