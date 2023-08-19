@@ -60,7 +60,7 @@ function Singlepost() {
         const postId = singlePost?._id
         const res = await updateLikes({ postId, userId })
         const data = await res?.data
-        dispatch(setPosts(data))
+        dispatch(setPost({ posts: data }))
         navigate(0)
     }
 
