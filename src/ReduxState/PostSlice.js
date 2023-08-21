@@ -9,26 +9,26 @@ export const postsSlice = createSlice({
     reducers: {
         setPosts: (_, action) => {
             return action.payload.data
-        }, 
-        setPost: (_, action) => {
-            console.log(state.posts)
+        },
+        setPost: (state, action) => {
             const updatedPosts = state.posts?.map((post) => {
-              if (post._id === action.payload.posts._id) {
-                return action.payload.posts;
+              if (post?._id === action.payload.post?._id) {
+                return action.payload.post;
               }
               return post;
             });
             console.log(updatedPosts)
             state.posts = updatedPosts;
           },
+       
         setEmpty: () => initialState,
     },
     extraReducers: (builder) => {
         builder.addMatcher(appApi.endpoints.createPost.matchFulfilled, (state, action) => action.payload)
         builder.addMatcher(appApi.endpoints.deletePost.matchFulfilled, (state, action) => action.payload)
         builder.addMatcher(appApi.endpoints.editPost.matchFulfilled, (state, action) => action.payload)
-        builder.addMatcher(appApi.endpoints.updateLikes.matchFulfilled, (state, action) => action.payload)
-        builder.addMatcher(appApi.endpoints.updateComments.matchFulfilled, (state, action) => action.payload)
+        // builder.addMatcher(appApi.endpoints.updateLikes.matchFulfilled, (state, action) => action.payload.data)
+        // builder.addMatcher(appApi.endpoints.updateComments.matchFulfilled, (state, action) => action.payload.data)
         
 
 

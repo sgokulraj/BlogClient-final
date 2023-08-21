@@ -12,11 +12,14 @@ import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import { FaRegComment } from "react-icons/fa";
 import { setPost, setPosts } from "../ReduxState/PostSlice"
 import { BiSolidSend } from "react-icons/bi"
-
+import {BsArrowReturnRight} from "react-icons/bs"
 function Singlepost() {
     const { id } = useParams()
     const [singlePost, setSinglePost] = useState(null)
     const user = useSelector((state) => state.user)
+    const posts = useSelector((state) => state.posts)
+    console.log(posts);
+
     const [deletePost, { isLoading, isSuccess }] = useDeletePostMutation()
     const [updateLikes] = useUpdateLikesMutation()
     const navigate = useNavigate()
@@ -25,14 +28,17 @@ function Singlepost() {
     async function getSinglePost() {
         const res = await fetch(`https://odd-cyan-chameleon-sock.cyclic.app/posts/${id}`)
         const data = await res.json()
-        console.log(data)
         setSinglePost(data)
-        console.log(user);
+        dispatch(setPosts({ data }))
     }
 
     useEffect(() => {
         getSinglePost()
     }, [id])
+
+    // useEffect(()=>{
+    //     getSinglePost()
+    // }, [setPost])
 
     function deleteMyPost(postId, userId) {
         if (window.confirm("Are you sure about it?")) {
@@ -60,8 +66,9 @@ function Singlepost() {
         const postId = singlePost?._id
         const res = await updateLikes({ postId, userId })
         const data = await res?.data
-        dispatch(setPost({ posts: data }))
-        navigate(0)
+        console.log(data);
+        dispatch(setPosts({ data }))
+        navigate("/")
     }
 
     const [show, setShow] = useState(false);
@@ -80,9 +87,9 @@ function Singlepost() {
             const comment = cmt;
             const res = await updateComments({ postId, loggedUser, username, email, comment })
             const data = await res?.data
-            dispatch(setPosts(data))
-            navigate(0)
-            setCmt("")
+            dispatch(setPosts({ data }))
+            navigate("/")
+
 
         } else {
             alert("Enter something to save your comment")
@@ -179,8 +186,8 @@ function Singlepost() {
                 <h5 className="my-3">Comments</h5>
                 {comments?.map((com, index) => (
                     <div key={index}>
-                        <p className="comment" style={{textDecoration:"underline", fontWeight:"600", color:"blue"}} title={com.email}>{com.username}</p>
-                        <p className="mx-5">{com.comment}</p>
+                        <p className="comment" style={{ fontWeight: "600", color: "blue" }} title={com.email}>{com.username}</p>
+                        <p className="mx-5"><BsArrowReturnRight  style={{marginTop:"-3px"}}/> {com.comment}</p>
                     </div>
                 ))}
             </div>
