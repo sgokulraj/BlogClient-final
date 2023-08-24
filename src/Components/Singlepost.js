@@ -3,27 +3,24 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import "../Stylesheets/Singlepost.css"
-import { MdMail } from "react-icons/md"
-import { useDeletePostMutation, useUpdateLikesMutation, useUpdateCommentsMutation } from "../ReduxState/appApi"
+import { useDeletePostMutation  } from "../ReduxState/appApi"
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Col, Container, Row } from "react-bootstrap";
-import { MdOutlineFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
-import { FaRegComment } from "react-icons/fa";
-import { setPost, setPosts } from "../ReduxState/PostSlice"
-import { BiSolidSend } from "react-icons/bi"
-import {BsArrowReturnRight} from "react-icons/bs"
+
+import { setPosts } from "../ReduxState/PostSlice"
+
 function Singlepost() {
     const { id } = useParams()
     const [singlePost, setSinglePost] = useState(null)
     const user = useSelector((state) => state.user)
-    const posts = useSelector((state) => state.posts)
-    console.log(posts);
+    const dispatch = useDispatch()
 
     const [deletePost, { isLoading, isSuccess }] = useDeletePostMutation()
-    const [updateLikes] = useUpdateLikesMutation()
     const navigate = useNavigate()
-    const [cmt, setCmt] = useState("")
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     async function getSinglePost() {
         const res = await fetch(`https://odd-cyan-chameleon-sock.cyclic.app/posts/${id}`)
@@ -50,51 +47,49 @@ function Singlepost() {
         navigate("/posts")
     }
 
-    const userId = user._id
-    const [isComments, setIsComments] = useState(false);
-
-    const dispatch = useDispatch()
-    let isLiked;
-    let likesCount
-    let likes = singlePost?.likes
-    if (likes) {
-        isLiked = Boolean(likes[userId]);
-        likesCount = Object.keys(likes).length;
-    }
-
-    async function likePostUpdate() {
-        const postId = singlePost?._id
-        const res = await updateLikes({ postId, userId })
-        const data = await res?.data
-        console.log(data);
-        dispatch(setPosts({ data }))
-        navigate("/")
-    }
-
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const [updateComments] = useUpdateCommentsMutation()
-    const comments = singlePost?.comments
-
-    async function sendComment() {
-        if (cmt.length > 0) {
-            const postId = singlePost?._id
-            // const commentDetails = { loggedUser: userId, username: user.username, email: user.email, comment: cmt }
-            const loggedUser = userId;
-            const username = user.username;
-            const email = user.email;
-            const comment = cmt;
-            const res = await updateComments({ postId, loggedUser, username, email, comment })
-            const data = await res?.data
-            dispatch(setPosts({ data }))
-            navigate("/")
+    // const userId = user._id
+    // const [isComments, setIsComments] = useState(false);
 
 
-        } else {
-            alert("Enter something to save your comment")
-        }
-    }
+    // let isLiked;
+    // let likesCount
+    // let likes = singlePost?.likes
+    // if (likes) {
+    //     isLiked = Boolean(likes[userId]);
+    //     likesCount = Object.keys(likes).length;
+    // }
+
+    // async function likePostUpdate() {
+    //     const postId = singlePost?._id
+    //     const res = await updateLikes({ postId, userId })
+    //     const data = await res?.data
+    //     console.log(data);
+    //     dispatch(setPosts({ data }))
+    //     navigate("/")
+    // }
+
+
+    // const [updateComments] = useUpdateCommentsMutation()
+    // const comments = singlePost?.comments
+
+    // async function sendComment() {
+    //     if (cmt.length > 0) {
+    //         const postId = singlePost?._id
+    //         // const commentDetails = { loggedUser: userId, username: user.username, email: user.email, comment: cmt }
+    //         const loggedUser = userId;
+    //         const username = user.username;
+    //         const email = user.email;
+    //         const comment = cmt;
+    //         const res = await updateComments({ postId, loggedUser, username, email, comment })
+    //         const data = await res?.data
+    //         dispatch(setPosts({ data }))
+    //         navigate("/")
+
+
+    //     } else {
+    //         alert("Enter something to save your comment")
+    //     }
+    // }
 
     return (
         <div className="singlepost">
@@ -154,7 +149,7 @@ function Singlepost() {
             <div className="desc">
                 <div dangerouslySetInnerHTML={{ __html: singlePost?.description }} />
             </div>
-            <hr />
+            {/* <hr />
             <div className="postImpressed" style={{ marginTop: "8px" }}>
                 <div className="postImpressed" style={{ gap: "25px" }}>
                     <div className="postImpressed" style={{ gap: "5px" }}>
@@ -190,7 +185,7 @@ function Singlepost() {
                         <p className="mx-5"><BsArrowReturnRight  style={{marginTop:"-3px"}}/> {com.comment}</p>
                     </div>
                 ))}
-            </div>
+            </div> */}
         </div>
     )
 }
